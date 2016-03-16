@@ -9,8 +9,8 @@ typedef struct List_node {
 List *swap(List *head, List *node_1, List *node_2)
 {
     if (!head ||
-        (node_1 == NULL) || (node_2 == NULL) ||
-        (node_1 == node_2))
+            (node_1 == NULL) || (node_2 == NULL) ||
+            (node_1 == node_2))
         return head;
 
     int num_pre_node_1_and_node_2 = 0;

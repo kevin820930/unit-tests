@@ -5,14 +5,8 @@ source scripts/print_list.gdb
 source scripts/free_list.gdb
 set $head = (List**)malloc(sizeof(List*))
 set logging file result-bubble
-create_list (*($head)) 3
+create_list (*($head)) 12 4 5
 set $_head = (*($head))
-p $_head->value = 12
-p $_head = $_head->next
-p $_head->value = 4
-p $_head = $_head->next
-p $_head->value = 5
-p $_head = $_head->next
 set logging on
 p "test begin"
 p "old_list"
@@ -24,20 +18,8 @@ p "new_list"
 printf_list (*($head))
 set logging off
 free_list (*($head))
-create_list (*($head)) 6
+create_list (*($head)) 456 78 41 25 1 47
 set $_head = (*($head))
-p $_head->value = 456
-p $_head = $_head->next
-p $_head->value = 78
-p $_head = $_head->next
-p $_head->value = 41
-p $_head = $_head->next
-p $_head->value = 25
-p $_head = $_head->next
-p $_head->value = 1
-p $_head = $_head->next
-p $_head->value = 47
-p $_head = $_head->next
 set logging on
 p "test begin"
 p "old_list"
@@ -49,22 +31,8 @@ p "new_list"
 printf_list (*($head))
 set logging off
 free_list (*($head))
-create_list (*($head)) 7
+create_list (*($head)) 7 5 97 6 3 7 8
 set $_head = (*($head))
-p $_head->value = 7
-p $_head = $_head->next
-p $_head->value = 5
-p $_head = $_head->next
-p $_head->value = 97
-p $_head = $_head->next
-p $_head->value = 6
-p $_head = $_head->next
-p $_head->value = 3
-p $_head = $_head->next
-p $_head->value = 7
-p $_head = $_head->next
-p $_head->value = 8
-p $_head = $_head->next
 set logging on
 p "test begin"
 p "old_list"
