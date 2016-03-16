@@ -9,7 +9,9 @@ LDFLAGS =
 OBJS := \
 	swap.o \
 	bubble.o \
-	stub.o
+	stub.o \
+	_tmp.gdb \
+	result-bubble
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<

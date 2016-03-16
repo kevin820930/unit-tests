@@ -1,57 +1,72 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include "swap.h"
+#include <stdlib.h>
 
-void swap(entry **head, entry *a, entry *b)
+typedef struct List_node {
+    int value;
+    struct List_node *next;
+} List;
+
+List *swap(List *head, List *node_1, List *node_2)
 {
-    printf("fuck: %s \n",(*head)->lastName);
-    entry *curr = *head;
-    entry *prevA = NULL;
-    entry *prevB = NULL;   
-    while (curr != a) {
-        prevA = curr;
-        curr = curr->Next;
-    }
-    curr = *head;
-    while (curr != b) {
-        prevB = curr;
-        curr = curr->Next;
-    }
-    curr = *head;
-    if(curr==a){
-    prevB->Next = a;
-    entry *tmp = a->Next;
-    a->Next = b->Next;
-    b->Next = tmp;
-    *head=b;
-    printf("head change to b \n");
-    }
-    else if(curr==b){
-    prevA->Next = b;
-    entry *tmp = a->Next;
-    a->Next = b->Next;
-    b->Next = tmp;
-    *head=a;
-    printf("head change a \n");
-    }
-    else if(prevA && prevB) {
-        prevA->Next = b;
-        prevB->Next = a;
-        entry *tmp = a->Next;
-        a->Next = b->Next;
-        b->Next = tmp;
-    } 
+    if (!head ||
+        (node_1 == NULL) || (node_2 == NULL) ||
+        (node_1 == node_2))
+        return head;
 
+    int num_pre_node_1_and_node_2 = 0;
+
+    List *_head = head;
+    List *pre_node_1,*pre_node_2,*tmp_node;
+    pre_node_1=NULL;
+    pre_node_2=NULL;
+    tmp_node=NULL;
+
+    while (head && head->next) {
+        if (head->next == node_1) {
+            pre_node_1 = head;
+            num_pre_node_1_and_node_2 = num_pre_node_1_and_node_2 + 1;
+        }
+
+        if (head->next == node_2) {
+            pre_node_2 = head;
+            num_pre_node_1_and_node_2 = num_pre_node_1_and_node_2 + 1;
+        }
+        head = head->next;
+    }
+
+    head = _head;
+    if (head == node_1) {
+        pre_node_1 = NULL;
+        num_pre_node_1_and_node_2 = num_pre_node_1_and_node_2 + 1;
+    }
+
+    if (head == node_2) {
+        pre_node_2 = NULL;
+        num_pre_node_1_and_node_2 = num_pre_node_1_and_node_2 + 1;
+    }
+
+    if (num_pre_node_1_and_node_2 != 2)
+        return head;
+
+    if (pre_node_1 == NULL) {
+        pre_node_2->next = node_1;
+        tmp_node = node_1->next;
+        node_1->next = node_2->next;
+        node_2->next = tmp_node;
+        return node_2;
+    }
+
+    if (pre_node_2 == NULL) {
+        pre_node_1->next = node_2;
+        tmp_node = node_2->next;
+        node_2->next = node_1->next;
+        node_1->next = tmp_node;
+        return node_1;
+    }
+    pre_node_1->next = node_2;
+    pre_node_2->next = node_1;
+    tmp_node = node_2->next;
+    node_2->next = node_1->next;
+    node_1->next = tmp_node;
+    return head;
 }
-//apppend OK
-entry *append(char lastName[], entry *e)
-{
-    e->Next = (entry *) malloc(sizeof(entry));
-    e = e->Next;
-    strcpy(e->lastName, lastName);
-    e->Next = NULL;
-
-    return e;
-}
-
